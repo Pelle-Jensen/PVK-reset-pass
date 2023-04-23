@@ -12,15 +12,59 @@
             <div class="content-wrapper">
                 <img width="300px" draggable="false" src="img/logo.png" alt="PVK Logo" />
                 <h2>Skriv inn ditt nye passord</h2>
-                <div class="form">
-                    <label for="pass2">Nytt passord</label>
-                    <input name="pass1" id="pass1" type="password" />
-                </div>
-                <div class="form">
-                    <label for="pass2">Gjenta passord</label>
-                    <input name="pass2" id="pass2" type="password" />
-                </div>
+                <form>
+                    <div class="form-ele">
+                        <label for="pass1">Nytt passord</label>
+                        <input name="pass1" id="pass1" type="password" />
+                    </div>
+                    <div class="form-ele">
+                        <label for="pass2">Gjenta passord</label>
+                        <input name="pass2" id="pass2" type="password" />
+                    </div>
+                    <div class="form-ele">
+                        <button id="submit" class="submit-button">LAGRE</button>
+                    </div>
+                    <span id="status"></span>
+                </form>
             </div>
         </div>
+
+        <script>
+            document.addEventListener("click", async (e) => {
+                if (!e.target.matches("#submit")) return;
+                event.preventDefault();
+                const pass = document.getElementById("pass1");
+                const pass2 = document.getElementById("pass2");
+                const status = document.getElementById("status");
+
+                if (pass.value != pass2.value) {
+                    status.innerText = "Passordfeltene er ikke like";
+                    return;
+                }
+
+                if (pass.value.length < 6) {
+                    status.innerText = "Passord må være lengre enn 6 bokstaver";
+                    return;
+                }
+
+                const hash = window.location.hash;
+                console.log(hash);
+                const params = hash.split("&");
+                console.log(params);
+                const access_token = params[0].split("=")[1];
+                console.log(access_token);
+
+                const res = await fetch("https://dckyehtfnaqrcutdihyw.functions.supabase.co/member-recover-password", {
+                    method: "post",
+                    headers: {
+                        Authorization: `Bearer ${access_token}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        pass: pass.value,
+                    }),
+                });
+            });
+        </script>
     </body>
 </html>

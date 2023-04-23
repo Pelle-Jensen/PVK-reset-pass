@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500;700&display=swap');
 
+* {
+    box-sizing: border-box;
+}
+
 html, body {
     margin: 0;
     overflow-x: hidden;
@@ -9,7 +13,8 @@ html, body {
     box-sizing: border-box;
 }
 
-.form {
+
+.form-ele {
     margin-top: 15px;
 }
 
@@ -19,7 +24,16 @@ input {
     border-radius: 5px;
     border: none;
     outline: none;
-    padding: 5px;
+    padding: 5px 15px;
+}
+
+
+.submit-button {
+    padding: 7px 15px;
+    font-weight: 600;
+    border-radius: 5px;
+    width: 100%;
+
 }
 
 nav {
