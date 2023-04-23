@@ -33,17 +33,23 @@
             document.addEventListener("click", async (e) => {
                 if (!e.target.matches("#submit")) return;
                 event.preventDefault();
+                const submit = document.getElementById("submit");
+                submit.setAttribute("disabled", true);
+
                 const pass = document.getElementById("pass1");
                 const pass2 = document.getElementById("pass2");
                 const status = document.getElementById("status");
 
+                status.innerText = "";
                 if (pass.value != pass2.value) {
                     status.innerText = "Passordfeltene er ikke like";
+                    submit.removeAttribute("disabled");
                     return;
                 }
 
                 if (pass.value.length < 6) {
                     status.innerText = "Passord må være lengre enn 6 bokstaver";
+                    submit.removeAttribute("disabled");
                     return;
                 }
 
@@ -64,6 +70,10 @@
                         pass: pass.value,
                     }),
                 });
+
+                console.log(res);
+                if (res.ok) status.innerText = "Passordet ditt har blitt endret!";
+                submit.removeAttribute("disabled");
             });
         </script>
     </body>
